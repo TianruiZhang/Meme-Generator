@@ -1,4 +1,5 @@
-from QuoteEngine import Ingestor, ImageCaptioner
+from QuoteEngine import Ingestor
+from MemeEngine import ImageCaptioner
 from argparse import ArgumentParser
 from glob import glob
 from os.path import abspath

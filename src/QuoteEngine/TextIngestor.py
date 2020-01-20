@@ -10,7 +10,6 @@ class TextIngestor(IngestorInterface):
         if not cls.can_ingest(path):
             raise Exception("Cannot Ingest Exception")
         quotes = []
-        print(f"The input txt path is {path}")
         with open(path, "r") as infile:
             for line in infile.readlines():
                 parsed = line.split(" - ")
