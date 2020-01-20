@@ -1,0 +1,3 @@
+venv
+src/QuoteEngine/__pycache__
+.DS_Store
