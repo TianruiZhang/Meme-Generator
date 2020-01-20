@@ -15,12 +15,15 @@ if __name__ == "__main__":
     body = args.body
     author = args.author
     img_path = args.img_path
+    captioner = ImageCaptioner.MemeGenerator(
+        "_data/MemedImages", 
+        "./fonts/Acme-Regular.ttf"
+    )
     if all([body, author, img_path]):
-        print("valid!")
+        captioner.make_meme(img_path, body, author)
     else:
         img_path = choice(glob("./_data/photos/dog/*"))
         text_path = choice(glob("./_data/DogQuotes/*"))
-        quotes = Ingestor.parse(text_path)
-        print(quotes)
-
+        body, author = choice(Ingestor.parse(text_path))
+        captioner.make_meme(img_path, body, author)
 

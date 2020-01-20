@@ -3,6 +3,9 @@ class QuoteModel:
         self.quote = quote
         self.name = name
     
+    def __iter__(self):
+        return iter((self.quote, self.name))
+    
     def __repr__(self):
         return f"<{self.quote}, {self.name}>"
         
