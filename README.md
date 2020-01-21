@@ -11,10 +11,10 @@ The goal of this project is to build a "meme generator" — a multimedia applica
 ### Installation
 1. Clone the repository: `git clone https://github.com/TianruiZhang/Meme-Generator.git`
 2. Switch directory: `cd Meme-Generator`
-2. Create a virtual environment: `python3 -m venv venv`
-3. Switch to `src` directory: `cd src`
-3. Activate the vitural environment: `source venv/bin/activate`
-3. Install packages: `pip install -r requirements.txt`
+3. Create a virtual environment: `python3 -m venv venv`
+4. Activate the vitural environment: `source venv/bin/activate`
+5. Switch to `src` directory: `cd src`
+6. Install packages: `pip install -r requirements.txt`
 ## Instruction
 1. `main.py`: a command line interface tool
 
@@ -25,9 +25,13 @@ The goal of this project is to build a "meme generator" — a multimedia applica
 
     The program returns a path to a generated image. If any of the three arguments is not defined, a random selection is used.
 
+    The generated images are stored in `_data/MemedImages`.
+
 2. `app.py`: a web interface
 
     In the virtual environment, run `python app.py` and type `http://127.0.0.1:5000/` in your browser.
+
+3. Type `deactivate` to leave the virtual environment.
 
 ## Modules
 ### QuoteEngine Module
