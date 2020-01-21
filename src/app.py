@@ -1,4 +1,3 @@
-import random
 import os
 import requests
 from flask import Flask, render_template, abort, request
@@ -6,8 +5,9 @@ from QuoteEngine import Ingestor
 from MemeEngine import ImageCaptioner
 from glob import glob
 from os import makedirs, remove
-from random import choice
+from random import choice, randint
 from os.path import exists, join
+from time import sleep
 
 app = Flask(__name__)
 app.debug = True
@@ -50,7 +50,6 @@ def meme_rand():
         "./fonts/Acme-Regular.ttf"
     )
     path = captioner.make_meme(img, quote.body, quote.author)
-    # print(f"The path is {path}")
     return render_template("meme.html", path=path)
 
 
@@ -71,7 +70,8 @@ def meme_post():
     body = request.form["body"]
     author = request.form["author"]
     response = requests.get(image_url)
-    path = join("static", "image.jpg")
+    rand = randint(0, 100)
+    path = join("static", f"image_{rand}.jpg")
     if response.status_code == 200:
         with open(path, "wb") as infile:
             infile.write(response.content)
@@ -83,9 +83,12 @@ def meme_post():
     )
     path = captioner.make_meme(path, body, author)
     # 3. Remove the temporary saved image.
-    remove(path)
+    to_delete = [
+        file for file in glob("static/*.jpg") if file != path
+    ]
+    for file in to_delete:
+        remove(file)
     return render_template("meme.html", path=path)
-
 
 if __name__ == "__main__":
     app.run()
