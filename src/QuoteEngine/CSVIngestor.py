@@ -17,4 +17,3 @@ class CSVIngestor(IngestorInterface):
             new_quote = QuoteModel(row["body"], row["author"])
             quotes.append(new_quote)
         return quotes
-        

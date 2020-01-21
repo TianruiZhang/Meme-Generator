@@ -2,6 +2,7 @@ from .IngestorInterface import IngestorInterface
 from typing import List
 from .QuoteModel import QuoteModel
 
+
 class TextIngestor(IngestorInterface):
     allowed_extensions = ["txt"]
 

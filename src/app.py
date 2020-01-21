@@ -12,6 +12,7 @@ from time import sleep
 app = Flask(__name__)
 app.debug = True
 
+
 def setup():
     """ Load all resources """
 
@@ -38,15 +39,10 @@ quotes, imgs = setup()
 def meme_rand():
     """ Generate a random meme """
 
-    # @TODO:
-    # Use the random python standard library class to:
-    # 1. select a random image from imgs array
-    # 2. select a random quote from the quotes array
-
     img = choice(imgs)
     quote = choice(quotes[0])
     captioner = ImageCaptioner.MemeGenerator(
-        "static", 
+        "static",
         "./fonts/Acme-Regular.ttf"
     )
     path = captioner.make_meme(img, quote.body, quote.author)
@@ -63,9 +59,6 @@ def meme_form():
 def meme_post():
     """ Create a user defined meme """
 
-    # @TODO:
-    # 1. Use requests to save the image from the image_url
-    #    form param to a temp local file.
     image_url = request.form["image_url"]
     body = request.form["body"]
     author = request.form["author"]
@@ -75,20 +68,18 @@ def meme_post():
     if response.status_code == 200:
         with open(path, "wb") as infile:
             infile.write(response.content)
-    # 2. Use the meme object to generate a meme using this temp
-    #    file and the body and author from paramaters.
     captioner = ImageCaptioner.MemeGenerator(
-        "static", 
+        "static",
         "./fonts/Acme-Regular.ttf"
     )
     path = captioner.make_meme(path, body, author)
-    # 3. Remove the temporary saved image.
     to_delete = [
         file for file in glob("static/*.jpg") if file != path
     ]
     for file in to_delete:
         remove(file)
     return render_template("meme.html", path=path)
+
 
 if __name__ == "__main__":
     app.run()

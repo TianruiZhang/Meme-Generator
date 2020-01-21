@@ -23,4 +23,3 @@ class PDFIngestor(IngestorInterface):
         quotes = TextIngestor.parse(path)
         remove(path)
         return quotes
-        

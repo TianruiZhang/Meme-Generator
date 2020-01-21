@@ -17,7 +17,7 @@ if __name__ == "__main__":
     author = args.author
     img_path = args.img_path
     captioner = ImageCaptioner.MemeGenerator(
-        "_data/MemedImages", 
+        "_data/MemedImages",
         "./fonts/Acme-Regular.ttf"
     )
     if all([body, author, img_path]):
@@ -27,4 +27,3 @@ if __name__ == "__main__":
         text_path = choice(glob("./_data/DogQuotes/*"))
         body, author = choice(Ingestor.parse(text_path))
         captioner.make_meme(img_path, body, author)
-
