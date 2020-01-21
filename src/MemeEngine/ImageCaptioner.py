@@ -16,6 +16,7 @@ class MemeGenerator:
             text: str,
             author: str,
             width: int = 500) -> str:
+        """Return the path of the memed image"""
         assert width is not None, "Width cannot be empty!"
         assert width <= 500, "The maximum width is 500px!"
         assert img_path.split(".")[-1] in ["jpg", "png"],\

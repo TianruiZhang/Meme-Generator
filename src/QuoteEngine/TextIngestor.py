@@ -8,6 +8,7 @@ class TextIngestor(IngestorInterface):
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
+        """Return quotes from a TXT file"""
         if not cls.can_ingest(path):
             raise Exception("Cannot Ingest Exception")
         quotes = []

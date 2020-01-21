@@ -9,6 +9,7 @@ class CSVIngestor(IngestorInterface):
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
+        """Return the quotes from a CSV file"""
         if not cls.can_ingest(path):
             raise Exception("Cannot Ingest Exception")
         quotes = []

@@ -10,8 +10,6 @@ from os.path import exists, join
 from time import sleep
 
 app = Flask(__name__)
-app.debug = True
-
 
 def setup():
     """ Load all resources """

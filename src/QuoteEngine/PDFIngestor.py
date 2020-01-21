@@ -12,6 +12,7 @@ class PDFIngestor(IngestorInterface):
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
+        """Return quotes from a PDF file"""
         if not cls.can_ingest(path):
             raise Exception("Cannot Ingest Exception")
         process = Popen(
