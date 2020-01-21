@@ -1,6 +1,6 @@
 from PIL import Image, ImageDraw, ImageFont
 from random import randint
-from os.path import exists
+from os.path import exists, abspath
 from os import makedirs
 
 
@@ -46,7 +46,8 @@ class MemeGenerator:
             )
         if not exists(self.out_dir):
             makedirs(self.out_dir)
-
         output_path = f"{self.out_dir}/{img_path.split('/')[-1]}"
+        print(f"The output path !!! is {output_path}")
+        img = img.convert("RGB")
         img.save(output_path)
         return output_path

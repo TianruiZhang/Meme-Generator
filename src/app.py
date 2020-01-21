@@ -2,13 +2,15 @@ import random
 import os
 import requests
 from flask import Flask, render_template, abort, request
-
-# @TODO Import your Ingestor and MemeEngine classes
+from QuoteEngine import Ingestor
+from MemeEngine import ImageCaptioner
+from glob import glob
+from os import makedirs, remove
+from random import choice
+from os.path import exists, join
 
 app = Flask(__name__)
-
-meme = MemeEngine("./static")
-
+app.debug = True
 
 def setup():
     """ Load all resources """
@@ -18,15 +20,13 @@ def setup():
                    "./_data/DogQuotes/DogQuotesPDF.pdf",
                    "./_data/DogQuotes/DogQuotesCSV.csv"]
 
-    # TODO: Use the Ingestor class to parse all files in the
-    # quote_files variable
-    quotes = None
+    quotes = [Ingestor.parse(file) for file in quote_files]
 
-    images_path = "./_data/photos/dog/"
+    images_path = "./_data/photos/dog/*"
 
     # TODO: Use the pythons standard library os class to find all
     # images within the images images_path directory
-    imgs = None
+    imgs = glob(images_path)
 
     return quotes, imgs
 
@@ -43,9 +43,14 @@ def meme_rand():
     # 1. select a random image from imgs array
     # 2. select a random quote from the quotes array
 
-    img = None
-    quote = None
-    path = meme.make_meme(img, quote.body, quote.author)
+    img = choice(imgs)
+    quote = choice(quotes[0])
+    captioner = ImageCaptioner.MemeGenerator(
+        "static", 
+        "./fonts/Acme-Regular.ttf"
+    )
+    path = captioner.make_meme(img, quote.body, quote.author)
+    # print(f"The path is {path}")
     return render_template("meme.html", path=path)
 
 
@@ -62,12 +67,23 @@ def meme_post():
     # @TODO:
     # 1. Use requests to save the image from the image_url
     #    form param to a temp local file.
+    image_url = request.form["image_url"]
+    body = request.form["body"]
+    author = request.form["author"]
+    response = requests.get(image_url)
+    path = join("static", "image.jpg")
+    if response.status_code == 200:
+        with open(path, "wb") as infile:
+            infile.write(response.content)
     # 2. Use the meme object to generate a meme using this temp
-    #    file and the body and author form paramaters.
+    #    file and the body and author from paramaters.
+    captioner = ImageCaptioner.MemeGenerator(
+        "static", 
+        "./fonts/Acme-Regular.ttf"
+    )
+    path = captioner.make_meme(path, body, author)
     # 3. Remove the temporary saved image.
-
-    path = None
-
+    remove(path)
     return render_template("meme.html", path=path)
 
 
